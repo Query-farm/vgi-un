@@ -53,7 +53,7 @@ CREATE EXTENSION REPOSITORY IF NOT EXISTS query_farm WITH PREFIX 'https://duckdb
 INSTALL vgi FROM query_farm;
 LOAD vgi FROM query_farm;
 
-ATTACH 'un' (TYPE vgi, LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-un@v0.1.0 vgi-un-worker');
+ATTACH 'un' (TYPE vgi, LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-un@v0.1.1 vgi-un-worker');
 ```
 
 From a checkout: `make build`, then

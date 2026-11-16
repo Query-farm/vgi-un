@@ -69,7 +69,7 @@ def _ddmmyyyy(raw: Any) -> dt.date | None:
     try:
         day, month, year = (int(p) for p in str(raw).split("/"))
         return dt.date(year, month, day)
-    except (ValueError, TypeError):
+    except ValueError, TypeError:
         return None
 
 

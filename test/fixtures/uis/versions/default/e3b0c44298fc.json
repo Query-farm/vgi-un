@@ -1,0 +1,16 @@
+{
+ "version": "20261110-fixture",
+ "publicationDate": "2026-11-12T17:04:52.832Z",
+ "themeDataStatus": [
+  {
+   "theme": "EDUCATION",
+   "lastUpdate": "12/11/2026",
+   "description": "Fixture release"
+  },
+  {
+   "theme": "CULTURE",
+   "lastUpdate": "02/09/2026",
+   "description": "Fixture release"
+  }
+ ]
+}

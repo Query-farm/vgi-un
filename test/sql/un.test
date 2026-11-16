@@ -1,0 +1,301 @@
+# name: test/sql/un.test
+# description: SQL-level tests for the un worker against recorded and synthetic fixtures (offline)
+# group: [un]
+
+require vgi
+
+require-env UN_WORKER
+
+require-env UN_FIXTURES
+
+# The fixtures mirror each API's requests (see test/fixtures/record.py), so the worker
+# reads them through its ordinary base_url option and never touches the network.
+statement ok
+ATTACH 'un' (TYPE vgi, LOCATION '{UN_WORKER}', base_url '{UN_FIXTURES}');
+
+# ------------------------------------------------------------------ main (bundled M49)
+
+query I
+SELECT count(*) FROM un.main.m49_countries;
+----
+248
+
+query TI
+SELECT region_name, count(*) FROM un.main.m49_countries WHERE ldc GROUP BY region_name ORDER BY region_name;
+----
+Africa	32
+Americas	1
+Asia	8
+Oceania	3
+
+# Namibia's alpha-2 code is the string 'NA', not NULL.
+query TT
+SELECT iso_alpha2, iso_alpha3 FROM un.main.m49_countries WHERE m49 = '516';
+----
+NA	NAM
+
+query TTTT
+SELECT un.main.iso3_from_m49('4'), un.main.iso3_from_m49('356'), un.main.iso3_from_m49('150'), un.main.iso3_from_m49(NULL);
+----
+AFG	IND	NULL	NULL
+
+query TTT
+SELECT un.main.m49_from_iso3('bra'), un.main.m49_from_iso3('XXX'), un.main.m49_from_iso3(NULL);
+----
+076	NULL	NULL
+
+# Scalars run over whole columns.
+query I
+SELECT count(*) FROM un.main.m49_countries WHERE un.main.m49_from_iso3(iso_alpha3) = m49;
+----
+248
+
+# ---------------------------------------------------------------------------- sdg
+
+query I
+SELECT count(*) FROM un.sdg.goals;
+----
+17
+
+query I
+SELECT count(*) FROM un.sdg.targets WHERE goal = '1';
+----
+7
+
+query T
+SELECT list_sort(series_codes)::VARCHAR FROM un.sdg.indicators WHERE indicator = '1.1.1';
+----
+[SI_POV_DAY1, SI_POV_EMP1]
+
+query TTT
+SELECT area_code, m49, country_iso3 FROM un.sdg.geoareas WHERE area_name = 'Afghanistan';
+----
+4	004	AFG
+
+# country_iso3 is pushed into the request as areaCode=356.
+query IR
+SELECT year, value FROM un.sdg.data('SI_POV_DAY1')
+WHERE country_iso3 = 'IND' AND sex = 'BOTHSEX' AND age = 'ALLAGE' AND location = 'ALLAREA' ORDER BY year;
+----
+1977	59.7
+1983	50.9
+1987	51.8
+1993	47.5
+2004	46.4
+2009	34.6
+2011	27.1
+2022	5.3
+
+# IN + BETWEEN push areaCode=50,356 and timePeriod=2004..2022.
+query TII
+SELECT country_iso3, count(*), min(year) FROM un.sdg.data('SI_POV_DAY1')
+WHERE country_iso3 IN ('IND', 'BGD') AND year BETWEEN 2004 AND 2022 GROUP BY ALL ORDER BY ALL;
+----
+BGD	11	2005
+IND	11	2004
+
+query RTTTT
+SELECT value, unit, nature, reporting_type, dimensions['Reporting Type'] FROM un.sdg.data('SI_POV_DAY1')
+WHERE country_iso3 = 'IND' AND year = 2022 AND sex = 'BOTHSEX' AND age = 'ALLAGE' AND location = 'ALLAREA';
+----
+5.3	PERCENT	G	G	G
+
+# An ISO code that is not a country matches nothing without a request.
+query I
+SELECT count(*) FROM un.sdg.data('SI_POV_DAY1') WHERE country_iso3 = 'ZZZ';
+----
+0
+
+statement error
+SELECT * FROM un.sdg.data('not a code!');
+----
+<REGEX>:.*
+
+# ---------------------------------------------------------------------- refugees
+
+query R
+SELECT value FROM un.refugees.populations
+WHERE origin_iso3 = 'SYR' AND asylum_iso3 = 'DEU' AND year = 2023 AND measure = 'refugees';
+----
+705812.0
+
+query TR
+SELECT asylum_iso3, value FROM un.refugees.populations
+WHERE origin_iso3 = 'SYR' AND year = 2023 AND measure = 'refugees' ORDER BY value DESC LIMIT 3;
+----
+TUR	3214780.0
+LBN	784884.0
+DEU	705812.0
+
+# '-' cells are omitted, never 0.
+query I
+SELECT count(*) FROM un.refugees.populations WHERE origin_iso3 = 'SYR' AND year = 2023 AND measure = 'oip';
+----
+0
+
+query TR
+SELECT decision_level, sum(value) FROM un.refugees.asylum_applications
+WHERE origin_iso3 = 'SYR' AND asylum_iso3 = 'DEU' AND year = 2023 GROUP BY ALL ORDER BY ALL;
+----
+FI	102930.0
+JR	12802.0
+RA	1631.0
+
+query R
+SELECT sum(value) FILTER (WHERE measure = 'dec_recognized') / sum(value) FILTER (WHERE measure = 'dec_total') > 0.1
+FROM un.refugees.asylum_decisions WHERE origin_iso3 = 'SYR' AND asylum_iso3 = 'DEU' AND year = 2023;
+----
+true
+
+query TTR
+SELECT asylum_code, asylum_iso3, value FROM un.refugees.solutions
+WHERE origin_iso3 = 'SYR' AND year = 2023 AND measure = 'returned_refugees' AND asylum_name = 'Egypt';
+----
+ARE	EGY	836.0
+
+query TT
+SELECT unhcr_code, country_iso3 FROM un.refugees.countries WHERE name = 'Algeria';
+----
+ALG	DZA
+
+# -------------------------------------------------------------------------- health
+
+query IRRR
+SELECT year, value, low, high FROM un.health.data('WHOSIS_000001')
+WHERE country_iso3 = 'IND' AND year BETWEEN 2015 AND 2021 AND sex = 'SEX_BTSX' ORDER BY year LIMIT 2;
+----
+2015	69.0	67.8	70.2
+2016	69.3	68.1	70.5
+
+# OData @odata.nextLink paging ($skip) is followed.
+query I
+SELECT count(*) FROM un.health.data('WHOSIS_000001') WHERE country_iso3 = 'PAK' AND year = 2019;
+----
+3
+
+query TT
+SELECT d.country_iso3, c.who_region_code FROM un.health.data('WHOSIS_000001') d
+JOIN un.health.countries c USING (country_iso3)
+WHERE d.country_iso3 IN ('BGD', 'IND', 'PAK') AND d.year = 2019 AND d.sex = 'SEX_BTSX' ORDER BY d.value DESC;
+----
+BGD	SEAR
+IND	SEAR
+PAK	EMR
+
+query TT
+SELECT code, title FROM un.health.dimension_values('SEX') ORDER BY code;
+----
+SEX_BTSX	Both sexes
+SEX_FMLE	Female
+SEX_MLE	Male
+
+query I
+SELECT count(*) FROM un.health.indicators WHERE name ILIKE '%life expectancy%';
+----
+3
+
+# ------------------------------------------------------------------------ heritage
+
+# 120 synthetic sites over two pages of 100.
+query II
+SELECT count(*), count(DISTINCT site_id) FROM un.heritage.sites();
+----
+120	120
+
+query TI
+SELECT category, count(*) FROM un.heritage.sites() WHERE in_danger GROUP BY category ORDER BY category;
+----
+Cultural	12
+Mixed	2
+Natural	2
+
+query ITT
+SELECT count(*), min(states_iso3[1]), min(criteria[1]) FROM un.heritage.sites(country := 'SYR');
+----
+24	SYR	ii
+
+query I
+SELECT count(*) FROM un.heritage.sites() WHERE category = 'Natural';
+----
+24
+
+query TT
+SELECT states_iso3::VARCHAR, url FROM un.heritage.sites() WHERE transboundary;
+----
+[FRA, KEN]	https://whc.unesco.org/en/list/1061
+
+# ----------------------------------------------------------------------------- uis
+
+query I
+SELECT count(*) FROM un.uis.indicators WHERE theme = 'CULTURE';
+----
+2
+
+query TT
+SELECT version, is_default FROM un.uis.versions ORDER BY version DESC;
+----
+20261110-fixture	true
+20260507-fixture	false
+
+query TIR
+SELECT geo_unit, year, round(value, 1) FROM un.uis.data(indicator := 'CR.1')
+WHERE country_iso3 IN ('BRA', 'USA') AND year BETWEEN 2015 AND 2020 ORDER BY geo_unit, year LIMIT 3;
+----
+BRA	2015	92.0
+BRA	2016	92.7
+BRA	2017	93.4
+
+query TT
+SELECT d.indicator_code, d.magnitude FROM un.uis.data(geo_unit := 'BRA') d WHERE d.year = 2020 AND d.value IS NULL;
+----
+CUL.HER.1	NA
+
+# Refused for exceeding 100,000 records, then split into three year windows.
+query III
+SELECT count(*), min(year), max(year) FROM un.uis.data(geo_unit := 'IND');
+----
+3	1970	2008
+
+# A piece that cannot be split fails clearly instead of returning partial data.
+statement error
+SELECT count(*) FROM un.uis.data(geo_unit := 'IND') WHERE year = 1999;
+----
+<REGEX>:.*cannot be split further.*
+
+statement error
+SELECT * FROM un.uis.data();
+----
+<REGEX>:.*needs an indicator or a geo unit.*
+
+# ---------------------------------------------------------------------- population
+
+query I
+SELECT count(*) FROM un.population.locations;
+----
+300
+
+query II
+SELECT indicator_id, has_sex::INTEGER FROM un.population.indicators WHERE short_name = 'TPopulation';
+----
+49	1
+
+# The data endpoints need a token: fail clearly naming the secret type.
+statement error
+SELECT * FROM un.population.data('49') WHERE country_iso3 = 'IND' AND year BETWEEN 2020 AND 2025;
+----
+<REGEX>:.*CREATE SECRET \(TYPE un_population.*
+
+statement ok
+CREATE SECRET un_pop_test (TYPE un_population, TOKEN 'fixture-token');
+
+query IR
+SELECT year, value FROM un.population.data('49')
+WHERE country_iso3 = 'IND' AND year BETWEEN 2020 AND 2025 AND sex = 'Both sexes' ORDER BY year LIMIT 2;
+----
+2020	1400000.0
+2021	1409000.0
+
+statement error
+SELECT * FROM un.population.data('49');
+----
+<REGEX>:.*needs countries.*

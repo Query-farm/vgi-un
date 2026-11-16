@@ -1,0 +1,53 @@
+{
+ "@odata.context": "https://ghoapi.azureedge.net/api/$metadata",
+ "value": [
+  {
+   "Code": "BGD",
+   "Title": "Bangladesh",
+   "ParentDimension": "REGION",
+   "Dimension": "COUNTRY",
+   "ParentCode": "SEAR",
+   "ParentTitle": "South-East Asia"
+  },
+  {
+   "Code": "BRA",
+   "Title": "Brazil",
+   "ParentDimension": "REGION",
+   "Dimension": "COUNTRY",
+   "ParentCode": "AMR",
+   "ParentTitle": "Americas"
+  },
+  {
+   "Code": "IND",
+   "Title": "India",
+   "ParentDimension": "REGION",
+   "Dimension": "COUNTRY",
+   "ParentCode": "SEAR",
+   "ParentTitle": "South-East Asia"
+  },
+  {
+   "Code": "KEN",
+   "Title": "Kenya",
+   "ParentDimension": "REGION",
+   "Dimension": "COUNTRY",
+   "ParentCode": "AFR",
+   "ParentTitle": "Africa"
+  },
+  {
+   "Code": "PAK",
+   "Title": "Pakistan",
+   "ParentDimension": "REGION",
+   "Dimension": "COUNTRY",
+   "ParentCode": "EMR",
+   "ParentTitle": "Eastern Mediterranean"
+  },
+  {
+   "Code": "FRA",
+   "Title": "France",
+   "ParentDimension": "REGION",
+   "Dimension": "COUNTRY",
+   "ParentCode": "EUR",
+   "ParentTitle": "Europe"
+  }
+ ]
+}

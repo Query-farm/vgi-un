@@ -1,16 +1,80 @@
 # Private graders for the public vgi.agent_test_tasks in the worker's catalog metadata.
-# `vgi-lint lint --ai` runs an agent on each prompt and grades it with check_sql.
+# `vgi-lint lint --ai` runs an agent on each prompt and grades it with check_sql/reference_sql.
 # See https://github.com/Query-farm/vgi-lint-check (VGI920).
 tasks:
-  - name: formal_greeting
-    reference_sql: SELECT starter.main.greet('Grace', 'formal') AS greeting
-  - name: sum_of_squares
-    reference_sql: SELECT sum(squared) AS total FROM starter.main.sequence_table(10)
-  - name: stepped_sequence
-    reference_sql: SELECT n FROM starter.main.sequence_table(4, step := 5) ORDER BY n
-  # Reads the public demo API (https://vgi-starter-api.query-farm.services/v1).
-  - name: items_per_category
+  # Bundled M49 table: deterministic.
+  - name: ldc_count_africa
+    reference_sql: SELECT count(*) AS ldcs FROM un.main.m49_countries WHERE ldc AND region_name = 'Africa'
+  - name: m49_for_india
+    reference_sql: SELECT un.main.m49_from_iso3('IND') AS m49
+  # Live API data changes with every upstream release, so these grade with check_sql
+  # against the same source the agent queried.
+  - name: sdg_goal_count
+    check_sql: SELECT count(*) = 17 FROM un.sdg.goals
+  - name: india_poverty_2022
     check_sql: >-
-      SELECT count(*) = 3 AND sum(items) = 25
-      FROM (SELECT category, count(*) AS items
-            FROM starter.main.fetch_items('https://vgi-starter-api.query-farm.services/v1') GROUP BY category)
+      SELECT count(*) = 1 FROM un.sdg.data('SI_POV_DAY1')
+      WHERE country_iso3 = 'IND' AND year = 2022 AND sex = 'BOTHSEX' AND age = 'ALLAGE' AND location = 'ALLAREA'
+  - name: syrian_refugees_germany
+    check_sql: >-
+      SELECT count(*) = 1 FROM un.refugees.populations
+      WHERE origin_iso3 = 'SYR' AND asylum_iso3 = 'DEU' AND year = 2023 AND measure = 'refugees'
+  - name: who_life_expectancy
+    check_sql: >-
+      SELECT count(*) = 1 FROM un.health.data('WHOSIS_000001')
+      WHERE country_iso3 = 'IND' AND year = 2019 AND sex = 'SEX_BTSX'
+  - name: heritage_in_danger
+    check_sql: SELECT count(*) > 0 FROM un.heritage.sites() WHERE in_danger
+  - name: uis_indicator_theme
+    check_sql: SELECT count(*) > 0 FROM un.uis.indicators WHERE theme = 'CULTURE'
+  - name: iso3_for_m49_code
+    reference_sql: SELECT un.main.iso3_from_m49('4') AS iso3
+  - name: sdg_goal1_targets
+    check_sql: SELECT count(*) = 7 FROM un.sdg.targets WHERE goal = '1'
+  - name: sdg_indicator_series
+    check_sql: SELECT list_contains(series_codes, 'SI_POV_DAY1') FROM un.sdg.indicators WHERE indicator = '1.1.1'
+  - name: sdg_poverty_series_code
+    check_sql: SELECT count(*) = 1 FROM un.sdg.series WHERE series_code = 'SI_POV_DAY1'
+  - name: sdg_country_areas
+    check_sql: SELECT count(*) > 0 FROM un.sdg.geoareas WHERE country_iso3 IS NOT NULL
+  - name: uis_sdg_regions
+    check_sql: SELECT count(*) > 0 FROM un.uis.geo_units WHERE type = 'REGIONAL' AND region_group = 'SDG'
+  - name: uis_default_version
+    check_sql: SELECT count(*) = 1 FROM un.uis.versions WHERE is_default
+  - name: uis_completion_brazil
+    check_sql: >-
+      SELECT count(*) = 6 FROM un.uis.data(indicator := 'CR.1')
+      WHERE country_iso3 IN ('BRA', 'USA') AND year BETWEEN 2015 AND 2020 AND country_iso3 = 'BRA'
+  - name: heritage_syria
+    check_sql: SELECT count(*) > 0 FROM un.heritage.sites(country := 'SYR')
+  - name: wpp_fertility_indicators
+    check_sql: SELECT count(*) > 0 FROM un.population.indicators WHERE topic = 'Fertility'
+  - name: wpp_india_location
+    check_sql: SELECT bool_and(location_id = 356) FROM un.population.locations WHERE country_iso3 = 'IND'
+  # Needs a un_population secret in the grading session (the data endpoints are token-gated).
+  - name: wpp_india_population
+    check_sql: >-
+      SELECT count(*) > 0 FROM un.population.data('49')
+      WHERE country_iso3 = 'IND' AND year BETWEEN 2020 AND 2025 AND sex = 'Both sexes'
+  - name: syria_germany_applications
+    check_sql: >-
+      SELECT sum(value) > 0 FROM un.refugees.asylum_applications
+      WHERE origin_iso3 = 'SYR' AND asylum_iso3 = 'DEU' AND year = 2023
+  - name: syria_germany_recognized
+    check_sql: >-
+      SELECT sum(value) > 0 FROM un.refugees.asylum_decisions
+      WHERE origin_iso3 = 'SYR' AND asylum_iso3 = 'DEU' AND year = 2023 AND measure = 'dec_recognized'
+  - name: syria_returns_2023
+    check_sql: >-
+      SELECT count(*) > 0 FROM un.refugees.solutions
+      WHERE origin_iso3 = 'SYR' AND year = 2023 AND measure = 'returned_refugees'
+  - name: unhcr_code_algeria
+    check_sql: SELECT bool_and(unhcr_code = 'ALG') FROM un.refugees.countries WHERE country_iso3 = 'DZA'
+  - name: who_life_expectancy_code
+    check_sql: SELECT count(*) = 1 FROM un.health.indicators WHERE indicator_code = 'WHOSIS_000001'
+  - name: who_sear_countries
+    check_sql: SELECT count(*) > 0 FROM un.health.countries WHERE who_region_code = 'SEAR'
+  - name: who_sex_codes
+    check_sql: SELECT count(*) = 3 FROM un.health.dimension_values('SEX')
+  - name: who_age_dimensions
+    check_sql: SELECT count(*) > 0 FROM un.health.dimensions WHERE title ILIKE '%age%'

@@ -1,0 +1,453 @@
+{
+ "total_count": 16,
+ "results": [
+  {
+   "id_no": "1012",
+   "uuid": "00000000-0000-4000-8000-000000000012",
+   "name_en": "Fixture Site 012",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1990",
+   "secondary_dates": "1990",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2010",
+   "area_hectares": 444.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 79.72,
+    "lat": 22.959999999999997
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1015",
+   "uuid": "00000000-0000-4000-8000-000000000015",
+   "name_en": "Fixture Site 015",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "1993",
+   "secondary_dates": "1993",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2013",
+   "area_hectares": 555.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "Syrian Arab Republic"
+   ],
+   "iso_codes": [
+    "SY"
+   ],
+   "region": "Arab States",
+   "region_code": "ARB",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 39.05,
+    "lat": 34.875
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1024",
+   "uuid": "00000000-0000-4000-8000-000000000024",
+   "name_en": "Fixture Site 024",
+   "short_description_en": "A made-up mixed property used by the vgi-un tests.",
+   "date_inscribed": "2002",
+   "secondary_dates": "2002",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2022",
+   "area_hectares": 888.5,
+   "criteria_txt": "(iii)(vii)",
+   "category": "Mixed",
+   "states_names": [
+    "Kenya"
+   ],
+   "iso_codes": [
+    "KE"
+   ],
+   "region": "Africa",
+   "region_code": "AFR",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 38.14,
+    "lat": 0.32
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1030",
+   "uuid": "00000000-0000-4000-8000-000000000030",
+   "name_en": "Fixture Site 030",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "2008",
+   "secondary_dates": "2008, 2015",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2028",
+   "area_hectares": 1110.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "Syrian Arab Republic"
+   ],
+   "iso_codes": [
+    "SY"
+   ],
+   "region": "Arab States",
+   "region_code": "ARB",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 39.199999999999996,
+    "lat": 34.949999999999996
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1036",
+   "uuid": "00000000-0000-4000-8000-000000000036",
+   "name_en": "Fixture Site 036",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "2014",
+   "secondary_dates": "2014",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2034",
+   "area_hectares": 1332.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "France"
+   ],
+   "iso_codes": [
+    "FR"
+   ],
+   "region": "Europe and North America",
+   "region_code": "EUR",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 2.76,
+    "lat": 46.78
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1045",
+   "uuid": "00000000-0000-4000-8000-000000000045",
+   "name_en": "Fixture Site 045",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "1978",
+   "secondary_dates": "1978",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 1998",
+   "area_hectares": 1665.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "Syrian Arab Republic"
+   ],
+   "iso_codes": [
+    "SY"
+   ],
+   "region": "Arab States",
+   "region_code": "ARB",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 39.35,
+    "lat": 35.025
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1048",
+   "uuid": "00000000-0000-4000-8000-000000000048",
+   "name_en": "Fixture Site 048",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "1981",
+   "secondary_dates": "1981",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2001",
+   "area_hectares": 1776.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "Brazil"
+   ],
+   "iso_codes": [
+    "BR"
+   ],
+   "region": "Latin America and the Caribbean",
+   "region_code": "LAC",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": -52.42,
+    "lat": -10.56
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1060",
+   "uuid": "00000000-0000-4000-8000-000000000060",
+   "name_en": "Fixture Site 060",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "1993",
+   "secondary_dates": "1993, 2000",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2013",
+   "area_hectares": 2220.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "Syrian Arab Republic"
+   ],
+   "iso_codes": [
+    "SY"
+   ],
+   "region": "Arab States",
+   "region_code": "ARB",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 39.5,
+    "lat": 35.099999999999994
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1072",
+   "uuid": "00000000-0000-4000-8000-000000000072",
+   "name_en": "Fixture Site 072",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2005",
+   "secondary_dates": "2005",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2025",
+   "area_hectares": 2664.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.32,
+    "lat": 23.259999999999998
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1075",
+   "uuid": "00000000-0000-4000-8000-000000000075",
+   "name_en": "Fixture Site 075",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "2008",
+   "secondary_dates": "2008",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2028",
+   "area_hectares": 2775.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "Syrian Arab Republic"
+   ],
+   "iso_codes": [
+    "SY"
+   ],
+   "region": "Arab States",
+   "region_code": "ARB",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 39.65,
+    "lat": 35.175
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1084",
+   "uuid": "00000000-0000-4000-8000-000000000084",
+   "name_en": "Fixture Site 084",
+   "short_description_en": "A made-up mixed property used by the vgi-un tests.",
+   "date_inscribed": "2017",
+   "secondary_dates": "2017",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2037",
+   "area_hectares": 3108.5,
+   "criteria_txt": "(iii)(vii)",
+   "category": "Mixed",
+   "states_names": [
+    "Kenya"
+   ],
+   "iso_codes": [
+    "KE"
+   ],
+   "region": "Africa",
+   "region_code": "AFR",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 38.74,
+    "lat": 0.62
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1090",
+   "uuid": "00000000-0000-4000-8000-000000000090",
+   "name_en": "Fixture Site 090",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "1978",
+   "secondary_dates": "1978, 1985",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 1998",
+   "area_hectares": 3330.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "Syrian Arab Republic"
+   ],
+   "iso_codes": [
+    "SY"
+   ],
+   "region": "Arab States",
+   "region_code": "ARB",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 39.8,
+    "lat": 35.25
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1096",
+   "uuid": "00000000-0000-4000-8000-000000000096",
+   "name_en": "Fixture Site 096",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "1984",
+   "secondary_dates": "1984",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2004",
+   "area_hectares": 3552.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "France"
+   ],
+   "iso_codes": [
+    "FR"
+   ],
+   "region": "Europe and North America",
+   "region_code": "EUR",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 3.36,
+    "lat": 47.08
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1105",
+   "uuid": "00000000-0000-4000-8000-000000000105",
+   "name_en": "Fixture Site 105",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "1993",
+   "secondary_dates": "1993",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2013",
+   "area_hectares": 3885.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "Syrian Arab Republic"
+   ],
+   "iso_codes": [
+    "SY"
+   ],
+   "region": "Arab States",
+   "region_code": "ARB",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 39.949999999999996,
+    "lat": 35.324999999999996
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1108",
+   "uuid": "00000000-0000-4000-8000-000000000108",
+   "name_en": "Fixture Site 108",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "1996",
+   "secondary_dates": "1996",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2016",
+   "area_hectares": 3996.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "Brazil"
+   ],
+   "iso_codes": [
+    "BR"
+   ],
+   "region": "Latin America and the Caribbean",
+   "region_code": "LAC",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": -51.82,
+    "lat": -10.260000000000002
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1120",
+   "uuid": "00000000-0000-4000-8000-000000000120",
+   "name_en": "Fixture Site 120",
+   "short_description_en": "A made-up cultural property used by the vgi-un tests.",
+   "date_inscribed": "2008",
+   "secondary_dates": "2008, 2015",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2028",
+   "area_hectares": 4440.5,
+   "criteria_txt": "(ii)(iv)",
+   "category": "Cultural",
+   "states_names": [
+    "Syrian Arab Republic"
+   ],
+   "iso_codes": [
+    "SY"
+   ],
+   "region": "Arab States",
+   "region_code": "ARB",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 40.1,
+    "lat": 35.4
+   },
+   "components_count": 1
+  }
+ ]
+}

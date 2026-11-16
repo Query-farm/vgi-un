@@ -42,11 +42,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # template-only:start
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        # template-only:end
         # macOS minutes cost 10x on private repos; add macos-latest here when you need it.
-        # fork-only: os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
         transport: [stdio, launch, http]
         exclude:
           - os: windows-latest
@@ -69,16 +66,19 @@ jobs:
         run: |
           if [ "$RUNNER_OS" = "Windows" ]; then bin="$PWD/.venv/Scripts"; tools="$PWD/.tools/Scripts"; exe=.exe
           else bin="$PWD/.venv/bin"; tools="$PWD/.tools/bin"; exe=""; fi
-          export WORKER="$bin/vgi-starter-worker$exe"
+          export WORKER="$bin/vgi-un-worker$exe"
           export HAYBARN_UNITTEST="$tools/haybarn-unittest$exe"
           export RECIPES_WORKER="$bin/python$exe $PWD/examples/run.py"
+          # The SQL tests read recorded/synthetic API responses through the worker's base_url option.
+          export UN_FIXTURES="$PWD/test/fixtures"
           if [ "$RUNNER_OS" = "Windows" ]; then
             # Native python.exe can't open MSYS paths (/d/a/...), and MSYS rewrites
             # path-like env vars it passes to native programs (mangling "D:/a" into
             # "D;A:\"). Hand over Windows paths and exclude the variable from rewriting.
             winbin="$(cygpath -m "$bin")"; winroot="$(cygpath -m "$PWD")"
             RECIPES_WORKER="$winbin/python.exe $winroot/examples/run.py"
-            export MSYS2_ENV_CONV_EXCL=RECIPES_WORKER
+            UN_FIXTURES="$winroot/test/fixtures"
+            export MSYS2_ENV_CONV_EXCL="RECIPES_WORKER;UN_FIXTURES"
           fi
           TRANSPORT=${{ matrix.transport }} PYTHON="uv run --no-project python" ci/run-integration.sh
 
@@ -96,10 +96,12 @@ jobs:
         run: python3 -c 'import tomllib; print("fail_on=" + tomllib.load(open("vgi-lint.toml", "rb")).get("fail_on", "error"))' >> "$GITHUB_OUTPUT"
       - uses: Query-farm/vgi-lint-check@v2
         with:
-          location: ${{ github.workspace }}/.venv/bin/vgi-starter-worker
+          location: ${{ github.workspace }}/.venv/bin/vgi-un-worker
           # Set in vgi-lint.toml, so local runs and CI agree.
           fail-on: ${{ steps.lintcfg.outputs.fail_on }}
-          # Set to false if your examples need real credentials or network access.
+          # Executes against test/fixtures via vgi-lint.toml's base_url attach option, so it stays
+          # offline. population.data needs a un_population token; its example only fails at run
+          # time and the lint passed with execution on, so execute stays true.
           execute: true
 
   docker:

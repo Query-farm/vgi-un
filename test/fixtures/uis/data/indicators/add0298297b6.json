@@ -1,0 +1,150 @@
+{
+ "hints": [],
+ "records": [
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "BRA",
+   "year": 2015,
+   "value": 92.0,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": [
+    {
+     "type": "Source",
+     "subtype": "Data sources",
+     "value": "Fixture household survey"
+    }
+   ]
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "BRA",
+   "year": 2016,
+   "value": 92.7,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": [
+    {
+     "type": "Source",
+     "subtype": "Data sources",
+     "value": "Fixture household survey"
+    }
+   ]
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "BRA",
+   "year": 2017,
+   "value": 93.4,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": [
+    {
+     "type": "Source",
+     "subtype": "Data sources",
+     "value": "Fixture household survey"
+    }
+   ]
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "BRA",
+   "year": 2018,
+   "value": 94.1,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": [
+    {
+     "type": "Source",
+     "subtype": "Data sources",
+     "value": "Fixture household survey"
+    }
+   ]
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "BRA",
+   "year": 2019,
+   "value": 94.8,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": [
+    {
+     "type": "Source",
+     "subtype": "Data sources",
+     "value": "Fixture household survey"
+    }
+   ]
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "BRA",
+   "year": 2020,
+   "value": 95.5,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": [
+    {
+     "type": "Source",
+     "subtype": "Data sources",
+     "value": "Fixture household survey"
+    }
+   ]
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "USA",
+   "year": 2015,
+   "value": 99.0,
+   "magnitude": null,
+   "qualifier": "UIS_EST",
+   "footnotes": []
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "USA",
+   "year": 2016,
+   "value": 99.1,
+   "magnitude": null,
+   "qualifier": "UIS_EST",
+   "footnotes": []
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "USA",
+   "year": 2017,
+   "value": 99.2,
+   "magnitude": null,
+   "qualifier": "UIS_EST",
+   "footnotes": []
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "USA",
+   "year": 2018,
+   "value": 99.3,
+   "magnitude": null,
+   "qualifier": "UIS_EST",
+   "footnotes": []
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "USA",
+   "year": 2019,
+   "value": 99.4,
+   "magnitude": null,
+   "qualifier": "UIS_EST",
+   "footnotes": []
+  },
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "USA",
+   "year": 2020,
+   "value": 99.5,
+   "magnitude": null,
+   "qualifier": "UIS_EST",
+   "footnotes": []
+  }
+ ],
+ "indicatorMetadata": []
+}

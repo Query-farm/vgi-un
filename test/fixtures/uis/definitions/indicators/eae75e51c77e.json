@@ -1,0 +1,154 @@
+[
+ {
+  "indicatorCode": "CR.1",
+  "name": "Completion rate, primary education, both sexes (%)",
+  "theme": "EDUCATION",
+  "lastDataUpdate": "12/11/2026",
+  "lastDataUpdateDescription": "Fixture release",
+  "dataAvailability": {
+   "totalRecordCount": 4200,
+   "timeLine": {
+    "min": 1990,
+    "max": 2025
+   },
+   "geoUnits": {
+    "types": [
+     "NATIONAL"
+    ]
+   }
+  }
+ },
+ {
+  "indicatorCode": "CR.2",
+  "name": "Completion rate, lower secondary education, both sexes (%)",
+  "theme": "EDUCATION",
+  "lastDataUpdate": "12/11/2026",
+  "lastDataUpdateDescription": "Fixture release",
+  "dataAvailability": {
+   "totalRecordCount": 4100,
+   "timeLine": {
+    "min": 1990,
+    "max": 2025
+   },
+   "geoUnits": {
+    "types": [
+     "NATIONAL"
+    ]
+   }
+  }
+ },
+ {
+  "indicatorCode": "LR.AG15T99",
+  "name": "Adult literacy rate, population 15+ years, both sexes (%)",
+  "theme": "EDUCATION",
+  "lastDataUpdate": "12/11/2026",
+  "lastDataUpdateDescription": "Fixture release",
+  "dataAvailability": {
+   "totalRecordCount": 3900,
+   "timeLine": {
+    "min": 1970,
+    "max": 2025
+   },
+   "geoUnits": {
+    "types": [
+     "NATIONAL"
+    ]
+   }
+  }
+ },
+ {
+  "indicatorCode": "ROFST.1.CP",
+  "name": "Out-of-school rate for children of primary school age, both sexes (%)",
+  "theme": "EDUCATION",
+  "lastDataUpdate": "12/11/2026",
+  "lastDataUpdateDescription": "Fixture release",
+  "dataAvailability": {
+   "totalRecordCount": 8800,
+   "timeLine": {
+    "min": 1970,
+    "max": 2025
+   },
+   "geoUnits": {
+    "types": [
+     "NATIONAL"
+    ]
+   }
+  }
+ },
+ {
+  "indicatorCode": "XGDP.FSGOV",
+  "name": "Government expenditure on education as a percentage of GDP (%)",
+  "theme": "EDUCATION",
+  "lastDataUpdate": "12/11/2026",
+  "lastDataUpdateDescription": "Fixture release",
+  "dataAvailability": {
+   "totalRecordCount": 6100,
+   "timeLine": {
+    "min": 1970,
+    "max": 2025
+   },
+   "geoUnits": {
+    "types": [
+     "NATIONAL"
+    ]
+   }
+  }
+ },
+ {
+  "indicatorCode": "GERD.GDP",
+  "name": "GERD as a percentage of GDP",
+  "theme": "SCIENCE_TECHNOLOGY_INNOVATION",
+  "lastDataUpdate": "12/11/2026",
+  "lastDataUpdateDescription": "Fixture release",
+  "dataAvailability": {
+   "totalRecordCount": 2600,
+   "timeLine": {
+    "min": 1996,
+    "max": 2025
+   },
+   "geoUnits": {
+    "types": [
+     "NATIONAL"
+    ]
+   }
+  }
+ },
+ {
+  "indicatorCode": "CUL.HER.1",
+  "name": "Number of cultural heritage sites (fixture)",
+  "theme": "CULTURE",
+  "lastDataUpdate": "12/11/2026",
+  "lastDataUpdateDescription": "Fixture release",
+  "dataAvailability": {
+   "totalRecordCount": 900,
+   "timeLine": {
+    "min": 2000,
+    "max": 2025
+   },
+   "geoUnits": {
+    "types": [
+     "NATIONAL"
+    ]
+   }
+  }
+ },
+ {
+  "indicatorCode": "CUL.HER.2",
+  "name": "Number of natural heritage sites (fixture)",
+  "theme": "CULTURE",
+  "lastDataUpdate": "12/11/2026",
+  "lastDataUpdateDescription": "Fixture release",
+  "dataAvailability": {
+   "totalRecordCount": 900,
+   "timeLine": {
+    "min": 2000,
+    "max": 2025
+   },
+   "geoUnits": {
+    "types": [
+     "NATIONAL"
+    ]
+   }
+  }
+ }
+]

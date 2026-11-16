@@ -1,0 +1,15 @@
+{
+ "hints": [],
+ "records": [
+  {
+   "indicatorId": "LR.AG15T99",
+   "geoUnit": "IND",
+   "year": 1970,
+   "value": 40.0,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": []
+  }
+ ],
+ "indicatorMetadata": []
+}

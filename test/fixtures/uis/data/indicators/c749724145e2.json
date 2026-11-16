@@ -1,0 +1,51 @@
+{
+ "hints": [],
+ "records": [
+  {
+   "indicatorId": "CR.1",
+   "geoUnit": "BRA",
+   "year": 2020,
+   "value": 96.3,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": []
+  },
+  {
+   "indicatorId": "CR.2",
+   "geoUnit": "BRA",
+   "year": 2020,
+   "value": 88.4,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": []
+  },
+  {
+   "indicatorId": "LR.AG15T99",
+   "geoUnit": "BRA",
+   "year": 2020,
+   "value": 93.2,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": []
+  },
+  {
+   "indicatorId": "XGDP.FSGOV",
+   "geoUnit": "BRA",
+   "year": 2020,
+   "value": 5.8,
+   "magnitude": null,
+   "qualifier": null,
+   "footnotes": []
+  },
+  {
+   "indicatorId": "CUL.HER.1",
+   "geoUnit": "BRA",
+   "year": 2020,
+   "value": null,
+   "magnitude": "NA",
+   "qualifier": null,
+   "footnotes": []
+  }
+ ],
+ "indicatorMetadata": []
+}

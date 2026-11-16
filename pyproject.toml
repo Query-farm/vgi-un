@@ -1,19 +1,20 @@
 [project]
-name = "vgi-starter-worker"
+name = "vgi-un-worker"
 version = "0.1.0"
-description = "A VGI worker for DuckDB, generated from the Query.Farm VGI starter template."
+description = "Curated United Nations data (SDG, UNESCO, World Heritage, WPP, UNHCR, WHO) as tidy DuckDB tables via VGI."
 readme = "README.md"
-license = "MIT-0"
+license = "0BSD"
 license-files = ["LICENSE"]
 requires-python = ">=3.13"
 dependencies = [
     # [http] adds the HTTP transport (`--http`) used by Docker deploys.
     # SDK bumps go through the template (minor bumps can raise the protocol).
-    "vgi-python[http]>=0.51.1,<0.52",
+    # [haybarn] evaluates pushed-down filters locally (auto_apply_filters).
+    "vgi-python[http,haybarn]>=0.51.1,<0.52",
 ]
 
 [project.scripts]
-vgi-starter-worker = "starter_worker.worker:main"
+vgi-un-worker = "un_worker.worker:main"
 
 [dependency-groups]
 dev = [
@@ -31,7 +32,7 @@ requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/starter_worker"]
+packages = ["src/un_worker"]
 
 [tool.ruff]
 line-length = 120

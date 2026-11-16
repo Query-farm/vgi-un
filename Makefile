@@ -5,25 +5,17 @@ HAYBARN_VERSION ?= 2.0.0rc11
 # vgi-lint is deliberately not pinned: the gate tracks the current quality bar.
 VGI_LINT        := uvx --prerelease=allow --from 'vgi-lint-check>=2,<3' vgi-lint lint
 LINT_ARGS       ?=
-WORKER          := $(CURDIR)/.venv/bin/vgi-starter-worker
+WORKER          := $(CURDIR)/.venv/bin/vgi-un-worker
 TOOLS           := $(CURDIR)/.tools
 HAYBARN_UNITTEST := $(TOOLS)/bin/haybarn-unittest
 TRANSPORT       ?= stdio
 
 .DEFAULT_GOAL := help
-.PHONY: help build test test-unit test-sql test-sql-all lint lint-explain lint-ai fmt check run run-http debug tools template-diff clean
-# template-only:start
-.PHONY: init
-# template-only:end
+.PHONY: help build test test-unit test-sql test-sql-all lint lint-explain lint-ai live-check fmt check run run-http debug tools template-diff clean
 
 help: ## List the targets
 	@awk 'BEGIN{FS=":.*## "} /^[a-zA-Z_-]+:.*## /{printf "  %-14s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
 
-# template-only:start
-init: ## Rename this template: make init NAME=weather
-	@test -n "$(NAME)" || { echo "usage: make init NAME=<snake_case_name>"; exit 2; }
-	uv run --no-project python scripts/vgi_template.py init $(NAME)
-# template-only:end
 
 build: ## Install the worker and dev tools into .venv
 	uv sync --locked
@@ -45,7 +37,7 @@ test-unit: build ## Unit tests (pytest)
 	uv run pytest -q
 
 test-sql: build tools ## SQL tests through DuckDB: make test-sql TRANSPORT=stdio|launch|http
-	WORKER=$(WORKER) RECIPES_WORKER="$(CURDIR)/.venv/bin/python $(CURDIR)/examples/run.py" HAYBARN_UNITTEST=$(HAYBARN_UNITTEST) TRANSPORT=$(TRANSPORT) PYTHON="uv run --no-project python" ci/run-integration.sh
+	UN_FIXTURES=$(CURDIR)/test/fixtures WORKER=$(WORKER) RECIPES_WORKER="$(CURDIR)/.venv/bin/python $(CURDIR)/examples/run.py" HAYBARN_UNITTEST=$(HAYBARN_UNITTEST) TRANSPORT=$(TRANSPORT) PYTHON="uv run --no-project python" ci/run-integration.sh
 
 test-sql-all: ## SQL tests over every transport
 	$(MAKE) test-sql TRANSPORT=stdio
@@ -69,7 +61,11 @@ run-http: build ## Serve over HTTP on port 8000
 	$(WORKER) --http --host 127.0.0.1 --port 8000
 
 debug: build tools ## Run one query against the worker with debug logging on stderr
-	@printf "LOAD vgi;\nATTACH 'starter' (TYPE vgi, LOCATION '$(WORKER) --debug');\nSELECT starter.main.greet('debug');\n" \
+	@printf "LOAD vgi;\nATTACH 'un' (TYPE vgi, LOCATION '$(WORKER) --debug', base_url '$(CURDIR)/test/fixtures');\nSELECT count(*) FROM un.sdg.goals;\n" \
+	  | uvx --from haybarn-cli==$(HAYBARN_VERSION) haybarn -no-agent
+
+live-check: build ## Opt-in: query the real UN APIs (network; not part of check)
+	@printf "LOAD vgi;\nATTACH 'un' (TYPE vgi, LOCATION '$(WORKER)');\n.read test/live/live_check.sql\n" \
 	  | uvx --from haybarn-cli==$(HAYBARN_VERSION) haybarn -no-agent
 
 template-diff: ## Show upstream template changes since this project was created

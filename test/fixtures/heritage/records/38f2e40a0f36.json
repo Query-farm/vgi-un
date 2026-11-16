@@ -1,0 +1,677 @@
+{
+ "total_count": 24,
+ "results": [
+  {
+   "id_no": "1002",
+   "uuid": "00000000-0000-4000-8000-000000000002",
+   "name_en": "Fixture Site 002",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1980",
+   "secondary_dates": "1980",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 74.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 79.61999999999999,
+    "lat": 22.91
+   },
+   "components_count": 3
+  },
+  {
+   "id_no": "1007",
+   "uuid": "00000000-0000-4000-8000-000000000007",
+   "name_en": "Fixture Site 007",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1985",
+   "secondary_dates": "1985",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 259.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 79.66999999999999,
+    "lat": 22.935
+   },
+   "components_count": 2
+  },
+  {
+   "id_no": "1012",
+   "uuid": "00000000-0000-4000-8000-000000000012",
+   "name_en": "Fixture Site 012",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1990",
+   "secondary_dates": "1990",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2010",
+   "area_hectares": 444.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 79.72,
+    "lat": 22.959999999999997
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1017",
+   "uuid": "00000000-0000-4000-8000-000000000017",
+   "name_en": "Fixture Site 017",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1995",
+   "secondary_dates": "1995",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 629.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 79.77,
+    "lat": 22.985
+   },
+   "components_count": 3
+  },
+  {
+   "id_no": "1022",
+   "uuid": "00000000-0000-4000-8000-000000000022",
+   "name_en": "Fixture Site 022",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2000",
+   "secondary_dates": "2000",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 814.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 79.82,
+    "lat": 23.009999999999998
+   },
+   "components_count": 2
+  },
+  {
+   "id_no": "1027",
+   "uuid": "00000000-0000-4000-8000-000000000027",
+   "name_en": "Fixture Site 027",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2005",
+   "secondary_dates": "2005",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 999.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 79.86999999999999,
+    "lat": 23.035
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1032",
+   "uuid": "00000000-0000-4000-8000-000000000032",
+   "name_en": "Fixture Site 032",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2010",
+   "secondary_dates": "2010",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 1184.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 79.91999999999999,
+    "lat": 23.06
+   },
+   "components_count": 3
+  },
+  {
+   "id_no": "1037",
+   "uuid": "00000000-0000-4000-8000-000000000037",
+   "name_en": "Fixture Site 037",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2015",
+   "secondary_dates": "2015",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 1369.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 79.97,
+    "lat": 23.084999999999997
+   },
+   "components_count": 2
+  },
+  {
+   "id_no": "1042",
+   "uuid": "00000000-0000-4000-8000-000000000042",
+   "name_en": "Fixture Site 042",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2020",
+   "secondary_dates": "2020",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 1554.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.02,
+    "lat": 23.11
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1047",
+   "uuid": "00000000-0000-4000-8000-000000000047",
+   "name_en": "Fixture Site 047",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1980",
+   "secondary_dates": "1980",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 1739.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.07,
+    "lat": 23.134999999999998
+   },
+   "components_count": 3
+  },
+  {
+   "id_no": "1052",
+   "uuid": "00000000-0000-4000-8000-000000000052",
+   "name_en": "Fixture Site 052",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1985",
+   "secondary_dates": "1985",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 1924.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.11999999999999,
+    "lat": 23.16
+   },
+   "components_count": 2
+  },
+  {
+   "id_no": "1057",
+   "uuid": "00000000-0000-4000-8000-000000000057",
+   "name_en": "Fixture Site 057",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1990",
+   "secondary_dates": "1990",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 2109.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.16999999999999,
+    "lat": 23.185
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1062",
+   "uuid": "00000000-0000-4000-8000-000000000062",
+   "name_en": "Fixture Site 062",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1995",
+   "secondary_dates": "1995",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 2294.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.22,
+    "lat": 23.209999999999997
+   },
+   "components_count": 3
+  },
+  {
+   "id_no": "1067",
+   "uuid": "00000000-0000-4000-8000-000000000067",
+   "name_en": "Fixture Site 067",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2000",
+   "secondary_dates": "2000",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 2479.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.27,
+    "lat": 23.235
+   },
+   "components_count": 2
+  },
+  {
+   "id_no": "1072",
+   "uuid": "00000000-0000-4000-8000-000000000072",
+   "name_en": "Fixture Site 072",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2005",
+   "secondary_dates": "2005",
+   "danger": "True",
+   "date_end": null,
+   "danger_list": "Y 2025",
+   "area_hectares": 2664.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.32,
+    "lat": 23.259999999999998
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1077",
+   "uuid": "00000000-0000-4000-8000-000000000077",
+   "name_en": "Fixture Site 077",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2010",
+   "secondary_dates": "2010",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 2849.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.36999999999999,
+    "lat": 23.285
+   },
+   "components_count": 3
+  },
+  {
+   "id_no": "1082",
+   "uuid": "00000000-0000-4000-8000-000000000082",
+   "name_en": "Fixture Site 082",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2015",
+   "secondary_dates": "2015",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 3034.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.41999999999999,
+    "lat": 23.31
+   },
+   "components_count": 2
+  },
+  {
+   "id_no": "1087",
+   "uuid": "00000000-0000-4000-8000-000000000087",
+   "name_en": "Fixture Site 087",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2020",
+   "secondary_dates": "2020",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 3219.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.47,
+    "lat": 23.334999999999997
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1092",
+   "uuid": "00000000-0000-4000-8000-000000000092",
+   "name_en": "Fixture Site 092",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1980",
+   "secondary_dates": "1980",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 3404.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.52,
+    "lat": 23.36
+   },
+   "components_count": 3
+  },
+  {
+   "id_no": "1097",
+   "uuid": "00000000-0000-4000-8000-000000000097",
+   "name_en": "Fixture Site 097",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1985",
+   "secondary_dates": "1985",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 3589.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.57,
+    "lat": 23.384999999999998
+   },
+   "components_count": 2
+  },
+  {
+   "id_no": "1102",
+   "uuid": "00000000-0000-4000-8000-000000000102",
+   "name_en": "Fixture Site 102",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1990",
+   "secondary_dates": "1990",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 3774.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.61999999999999,
+    "lat": 23.41
+   },
+   "components_count": 1
+  },
+  {
+   "id_no": "1107",
+   "uuid": "00000000-0000-4000-8000-000000000107",
+   "name_en": "Fixture Site 107",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "1995",
+   "secondary_dates": "1995",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 3959.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.66999999999999,
+    "lat": 23.435
+   },
+   "components_count": 3
+  },
+  {
+   "id_no": "1112",
+   "uuid": "00000000-0000-4000-8000-000000000112",
+   "name_en": "Fixture Site 112",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2000",
+   "secondary_dates": "2000",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 4144.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.72,
+    "lat": 23.459999999999997
+   },
+   "components_count": 2
+  },
+  {
+   "id_no": "1117",
+   "uuid": "00000000-0000-4000-8000-000000000117",
+   "name_en": "Fixture Site 117",
+   "short_description_en": "A made-up natural property used by the vgi-un tests.",
+   "date_inscribed": "2005",
+   "secondary_dates": "2005",
+   "danger": "False",
+   "date_end": null,
+   "danger_list": null,
+   "area_hectares": 4329.5,
+   "criteria_txt": "(vii)(ix)",
+   "category": "Natural",
+   "states_names": [
+    "India"
+   ],
+   "iso_codes": [
+    "IN"
+   ],
+   "region": "Asia and the Pacific",
+   "region_code": "APA",
+   "transboundary": "False",
+   "geo_point_2d": {
+    "lon": 80.77,
+    "lat": 23.485
+   },
+   "components_count": 1
+  }
+ ]
+}

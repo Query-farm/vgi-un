@@ -4,13 +4,10 @@
 # contract with `vgi-lint spec`.
 
 # The worker to attach, relative to this directory. Build it first with `make build`.
-location = ".venv/bin/vgi-starter-worker"
+location = ".venv/bin/vgi-un-worker"
 
-# template-only:start
+# The publish bar: zero findings at every severity.
 fail_on = "info"
-# template-only:end
-# Fail on warnings while you build. Raise this to "info" before you publish the worker.
-# fork-only: fail_on = "warning"
 
 # Waive a finding only with a kind and a reason, so the waiver can be audited:
 #   domain-exemption  permanent and legitimate for this worker
@@ -20,6 +17,21 @@ fail_on = "info"
 ignore = [
   # { code = "VGI146", kind = "domain-exemption", reason = "every entry point needs a key" },
 ]
+
+[per-object]
+"un.sdg.series" = { ignore = [{ code = "VGI144", kind = "domain-exemption", reason = "'series' is already plural (one row per data series); the SDG API calls them series" }] }
+"un.population.indicators" = { ignore = [{ code = "VGI808", kind = "domain-exemption", reason = "indicator_id is this table's own declared primary key, not a reference to another table" }] }
+"un.population.locations" = { ignore = [{ code = "VGI808", kind = "domain-exemption", reason = "location_id is this table's own declared primary key, not a reference to another table" }] }
+"un.refugees.populations" = { ignore = [{ code = "VGI807", kind = "domain-exemption", reason = "long-format UNHCR facts; the natural key (year, origin, asylum, dimensions, measure) is not guaranteed unique or non-null upstream, and DuckDB accepts only ENFORCED keys" }, { code = "VGI809", kind = "domain-exemption", reason = "origin_code/asylum_code are UNHCR codes that can fall outside refugees.countries (e.g. stateless or unknown origin), so an ENFORCED foreign key would be false" }] }
+"un.refugees.asylum_applications" = { ignore = [{ code = "VGI807", kind = "domain-exemption", reason = "long-format UNHCR facts; the natural key (year, origin, asylum, dimensions, measure) is not guaranteed unique or non-null upstream, and DuckDB accepts only ENFORCED keys" }, { code = "VGI809", kind = "domain-exemption", reason = "origin_code/asylum_code are UNHCR codes that can fall outside refugees.countries (e.g. stateless or unknown origin), so an ENFORCED foreign key would be false" }] }
+"un.refugees.asylum_decisions" = { ignore = [{ code = "VGI807", kind = "domain-exemption", reason = "long-format UNHCR facts; the natural key (year, origin, asylum, dimensions, measure) is not guaranteed unique or non-null upstream, and DuckDB accepts only ENFORCED keys" }, { code = "VGI809", kind = "domain-exemption", reason = "origin_code/asylum_code are UNHCR codes that can fall outside refugees.countries (e.g. stateless or unknown origin), so an ENFORCED foreign key would be false" }] }
+"un.refugees.solutions" = { ignore = [{ code = "VGI807", kind = "domain-exemption", reason = "long-format UNHCR facts; the natural key (year, origin, asylum, dimensions, measure) is not guaranteed unique or non-null upstream, and DuckDB accepts only ENFORCED keys" }, { code = "VGI809", kind = "domain-exemption", reason = "origin_code/asylum_code are UNHCR codes that can fall outside refugees.countries (e.g. stateless or unknown origin), so an ENFORCED foreign key would be false" }] }
+
+# Run the execution probes offline: every upstream API is read from the recorded and
+# synthetic responses in test/fixtures (laid out by un_worker.common.fixture_relpath)
+# through the worker's ordinary base_url option.
+[attach_options]
+base_url = "test/fixtures"
 
 # Adopting the gate on a worker that already has findings? Record them once with
 #   vgi-lint lint --baseline vgi-lint-baseline --update-baseline

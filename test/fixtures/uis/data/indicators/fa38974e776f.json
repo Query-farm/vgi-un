@@ -1,0 +1,5 @@
+{
+ "message": "Too much data requested (120000 records), please reduce the amount of records queried to less than 100000 by using the available filters.",
+ "error": "Bad Request",
+ "statusCode": 400
+}

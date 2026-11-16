@@ -1,0 +1,29 @@
+{
+ "@odata.context": "https://ghoapi.azureedge.net/api/$metadata",
+ "value": [
+  {
+   "Code": "SEX_BTSX",
+   "Title": "Both sexes",
+   "ParentDimension": "",
+   "Dimension": "SEX",
+   "ParentCode": "",
+   "ParentTitle": ""
+  },
+  {
+   "Code": "SEX_FMLE",
+   "Title": "Female",
+   "ParentDimension": "",
+   "Dimension": "SEX",
+   "ParentCode": "",
+   "ParentTitle": ""
+  },
+  {
+   "Code": "SEX_MLE",
+   "Title": "Male",
+   "ParentDimension": "",
+   "Dimension": "SEX",
+   "ParentCode": "",
+   "ParentTitle": ""
+  }
+ ]
+}

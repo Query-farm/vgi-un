@@ -1,314 +1,166 @@
-<!-- managed-by: vgi-starters (edit upstream in shared/README.md.tmpl, then run tools/render.py) -->
 <p align="center">
   <img src="https://query.farm/media-kit/products/vgi/vgi-logo.png" alt="Vector Gateway Interface (VGI)" width="320">
 </p>
 
-<p align="center"><em>A Query.Farm VGI worker for DuckDB, written in Python.</em></p>
+# United Nations SDG, UNESCO, Population, Refugee and Health Statistics in DuckDB
 
-# VGI Starter Worker — Python
+> **vgi-un** · a [Query.Farm](https://query.farm) VGI worker
 
-[![CI](https://github.com/Query-farm/vgi-starter-python/actions/workflows/ci.yml/badge.svg)](https://github.com/Query-farm/vgi-starter-python/actions/workflows/ci.yml)
 [![vgi worker: query.farm](https://query.farm/media-kit/shields/vgi-worker.svg)](https://query.farm)
 
-[VGI](https://query.farm/vgi) lets DuckDB call functions that live in a separate
-process: your code, in any language, exposed as ordinary SQL. This worker adds
-three example functions that you rename and replace with your own:
+Curated United Nations data as tidy `(country, year, indicator, value)` tables. Each schema
+talks to one UN-system portal's own JSON API, and pushes indicator, country and year filters
+into it:
 
-| Function | Kind | Shows you how to |
+| Schema | Source | Key? |
 |---|---|---|
-| `greet(name)` / `greet(name, style)` | scalar | vectorize over a column, overload, constrain a constant |
-| `sequence_table(count, step := 1)` | table | stream rows in batches, take named arguments |
-| `fetch_items(base_url, page_size := 100)` | table | page through a REST API, retry, read a secret |
+| `sdg` | [UN SDG Global Database](https://unstats.un.org/sdgs/dataportal) (UN Statistics Division) | no |
+| `uis` | [UNESCO Institute for Statistics](https://databrowser.uis.unesco.org/) data API | no |
+| `heritage` | [UNESCO World Heritage List](https://whc.unesco.org/en/list/) (UNESCO open-data copy) | no |
+| `population` | [UN DESA World Population Prospects](https://population.un.org/wpp/) Data Portal | data only: `un_population` secret |
+| `refugees` | [UNHCR Refugee Population Statistics](https://www.unhcr.org/refugee-statistics/) | no |
+| `health` | [WHO Global Health Observatory](https://www.who.int/data/gho) (OData) | no |
+| `main` | bundled [UN M49](https://unstats.un.org/unsd/methodology/m49/overview/) country codes | — |
 
-<!-- template-only:start -->
-## Use this template
-
-This repository is a **template**. Click **Use this template** on GitHub, or:
-
-```bash
-gh repo create my-org/weather-worker --template Query-farm/vgi-starter-python --private --clone
-cd weather-worker
-make init NAME=weather     # renames catalog, package, binary, env vars; removes this section
-make check                 # lint + tests over every transport + metadata score
-```
-
-Prefer to work with an AI coding agent? `make init` first, then hand it
-[AGENTS.md](AGENTS.md). See [Using with coding agents](#using-with-coding-agents).
-
-Starters exist for [Python](https://github.com/Query-farm/vgi-starter-python),
-[TypeScript](https://github.com/Query-farm/vgi-starter-typescript),
-[Go](https://github.com/Query-farm/vgi-starter-go),
-[Rust](https://github.com/Query-farm/vgi-starter-rust),
-[Java](https://github.com/Query-farm/vgi-starter-java) and
-[C#](https://github.com/Query-farm/vgi-starter-csharp). They are generated from
-[Query-farm/vgi-starters](https://github.com/Query-farm/vgi-starters); send
-changes there.
-<!-- template-only:end -->
-
-## Quick start
-
-**Prerequisites:** Python 3.13+ and [uv](https://docs.astral.sh/uv/) (it runs the SQL
-test runner and the metadata checker).
-
-```bash
-make build
-```
-
-Then open DuckDB 2.0 or [Haybarn](https://query.farm/products/haybarn) and attach the
-worker. `LOCATION` is the command DuckDB runs to start it; use an absolute path,
-because a relative one resolves against DuckDB's working directory.
-
-**DuckDB 2.0:**
+Countries join on **ISO 3166-1 alpha-3** (`country_iso3`) everywhere, plus each source's own
+area code (`m49` 3-digit text for SDG, UNHCR codes, WPP location ids).
 
 ```sql
+-- Extreme poverty in India over time (SDG 1.1.1)
+SELECT year, value FROM un.sdg.data('SI_POV_DAY1')
+WHERE country_iso3 = 'IND' AND sex = 'BOTHSEX' AND age = 'ALLAGE' AND location = 'ALLAREA'
+ORDER BY year;
+
+-- Where Syrian refugees lived at the end of 2023
+SELECT asylum_name, value FROM un.refugees.populations
+WHERE origin_iso3 = 'SYR' AND year = 2023 AND measure = 'refugees'
+ORDER BY value DESC LIMIT 5;
+
+-- Life expectancy by WHO region, joined through the bundled M49 table
+SELECT m.region_name, round(avg(d.value), 1) AS life_expectancy
+FROM un.health.data('WHOSIS_000001') d JOIN un.main.m49_countries m ON m.iso_alpha3 = d.country_iso3
+WHERE d.year = 2019 AND d.sex = 'SEX_BTSX' GROUP BY ALL ORDER BY ALL;
+```
+
+## Install and attach
+
+Requires [uv](https://docs.astral.sh/uv/) and DuckDB 2.0 (or [Haybarn](https://query.farm/products/haybarn) 2.0).
+
+```sql
+-- DuckDB 2.0
 SET allow_extension_repositories = 'allowed';
 CREATE EXTENSION REPOSITORY IF NOT EXISTS query_farm WITH PREFIX 'https://duckdb-extensions.query.farm';
 INSTALL vgi FROM query_farm;
 LOAD vgi FROM query_farm;
-ATTACH 'starter' (TYPE vgi, LOCATION '/abs/path/to/vgi-starter-python/.venv/bin/vgi-starter-worker');
+
+ATTACH 'un' (TYPE vgi, LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-un@v0.1.0 vgi-un-worker');
 ```
 
-**Haybarn 2.0** (`uvx haybarn-cli`):
+From a checkout: `make build`, then
+`ATTACH 'un' (TYPE vgi, LOCATION '/abs/path/to/vgi-un/.venv/bin/vgi-un-worker')`.
 
-```sql
-INSTALL vgi FROM community;
-LOAD vgi;
-ATTACH 'starter' (TYPE vgi, LOCATION '/abs/path/to/vgi-starter-python/.venv/bin/vgi-starter-worker');
-```
+### ATTACH options
 
-Now call the functions:
-
-```sql
-SELECT starter.main.greet('Ada');                         -- Hi, Ada!
-SELECT starter.main.greet('Ada', 'formal');               -- Good day, Ada.
-SELECT * FROM starter.main.sequence_table(5, step := 2) ORDER BY n;
-```
-
-`fetch_items` pages through a REST API. Try it against the public demo API (25 fixed items):
-
-```sql
-SELECT category, count(*) AS items, round(avg(price), 2) AS avg_price
-FROM starter.main.fetch_items('https://vgi-starter-api.query-farm.services/v1')
-GROUP BY category ORDER BY category;
-```
-
-If an older cached extension misbehaves, refresh it with `FORCE INSTALL vgi FROM query_farm;`
-(DuckDB) or `FORCE INSTALL vgi FROM community;` (Haybarn).
-
-## Using it in a pipeline
-
-Worker functions compose with everything else in DuckDB:
-
-```sql
--- Materialize an API into a local table.
-CREATE TABLE items AS SELECT * FROM starter.main.fetch_items('https://vgi-starter-api.query-farm.services/v1');
-
--- Join it with local files.
-SELECT i.name, i.price, s.units
-FROM items i JOIN 'sales.parquet' s ON s.item_id = i.id;
-
--- Call a scalar per row of another table.
-SELECT customer, starter.main.greet(customer, 'formal') FROM read_csv('customers.csv');
-```
-
-## Project layout
-
-```
-src/starter_worker/
-  worker.py        # assembles the catalog; add new functions to FUNCTIONS
-  meta.py          # catalog/schema metadata + helpers (object_tags, column)
-  greet.py         # scalar example (overloads, ConstParam choices)
-  sequence.py      # table function example (named args, streaming state)
-  fetch_items.py   # REST API table function (pagination, retries, secrets)
-tests/             # pytest unit tests (in-process client)
-test/sql/          # sqllogictest files run through DuckDB
-test/mock_api/     # offline mock of the REST API used by tests
-examples/          # recipes: pushdown, caching, catalog tables, aggregates, COPY …
-ci/                # integration harness used by `make test-sql` and CI
-scripts/           # vgi_template.py (init / template-diff)
-vgi-agent-tests.yaml  # private graders for the agent test tasks
-```
-
-## Adding a function
-
-1. Create `src/starter_worker/<name>.py`. Copy the closest example: `greet.py` for a
-   scalar, `sequence.py` for a generator, `fetch_items.py` for an API.
-2. Declare arguments with `Annotated[..., Param(...)]`/`ConstParam(...)` (scalars) or a
-   frozen dataclass of `Annotated[..., Arg(...)]` (table functions). Use `Arg(0, ...)`
-   for positional arguments and `Arg("name", default=...)` for named ones.
-3. Give the class a `class Meta` with `name`, `description`, `tags=object_tags(...)`
-   and `examples`.
-4. Add the class to `FUNCTIONS` in `src/starter_worker/worker.py`.
-
-**Which kind of function?**
-
-| You want to… | Use |
-|---|---|
-| compute one value per input row | a **scalar** function |
-| return a set of rows from arguments (an API, a file, a generator) | a **table** function |
-| transform or aggregate the rows of a query | a **table in-out** function or an **aggregate** |
-| expose a fixed dataset by name (`SELECT * FROM starter.main.t`) | a **catalog table** |
-| write data out to a file or service | `COPY … TO` with a copy function |
-| accept `INSERT` / `UPDATE` / `DELETE` | a catalog table with insert/update/delete functions |
-
-The [examples/](examples/) folder has a recipe for most of these. Writable tables have no
-recipe:
-
-A writable table is a catalog `Table` that names a table in-out function per operation in
-`insert_function`, `update_function` and `delete_function`, with the richest result each one
-produces in `write_result_modes`. The helpers in `vgi.write_results` (`write_options`,
-`write_result_schema`, `write_result_batch`, `row_id_field`) read DuckDB's `write_options`
-argument and build the result. UPDATE and DELETE need a scan function that emits
-`row_id_field()` and declares projection pushdown. Transactions: override `attach_supports_transactions`
-and `catalog_transaction_begin` / `_commit` / `_rollback` on the catalog. Since VGI protocol 3.3
-a table's scan and write functions are table-only: hidden from `duckdb_functions()` and not
-callable from SQL. Set `expose_scan=True` on the table to keep the scan callable as an ordinary
-table function too (write functions never are). See
-[Writable tables](https://github.com/Query-farm/vgi-python/blob/main/docs/catalog-interface.md#writable-tables)
-in the vgi-python docs.
-
-## Secrets and configuration
-
-`fetch_items` shows the recommended pattern. A bearer token comes from a DuckDB secret
-when one exists, and from an environment variable otherwise:
-
-```sql
-CREATE SECRET (TYPE starter_api, TOKEN 'your-token');      -- per session, never logged
-```
-
-```bash
-STARTER_API_TOKEN=your-token make run-http                # for servers and containers
-```
-
-Try it: the demo API's `/v1/auth` endpoint needs the published token `demo-token`.
-
-```sql
-SELECT count(*) FROM starter.main.fetch_items('https://vgi-starter-api.query-farm.services/v1/auth');   -- fails: HTTP 401
-CREATE SECRET (TYPE starter_api, TOKEN 'demo-token');
-SELECT count(*) FROM starter.main.fetch_items('https://vgi-starter-api.query-farm.services/v1/auth');   -- 25
-```
-
-Never bake credentials into the image or the source. If a function can't run without
-real credentials, its examples can't execute in CI either. Set `execute: false` on the
-metadata check for that worker (see `.github/workflows/ci.yml`), and add
-`LINT_ARGS ?= --no-execute` to the Makefile so local runs match.
-
-## Testing
-
-```bash
-make test-unit                 # fast Python unit tests
-make test-sql                  # test/sql/*.test through DuckDB (stdio)
-make test-sql TRANSPORT=http   # …over HTTP (also: launch)
-make check                     # everything CI runs
-```
-
-`test/sql/*.test` files are [sqllogictest](https://duckdb.org/docs/stable/dev/sqllogictest/intro)
-scripts. `ci/run-integration.sh` runs them against your worker and fails on any
-unexpected skip, so a broken transport can't hide behind a green run.
-`fetch_items` is tested against `test/mock_api/server.py` so tests are fast and
-offline.
-
-**Testing against real data:** put live tests in their own `.test` file that starts with
-`require-env STARTER_LIVE`. They run only when that variable is set. Add the skip reason
-to `EXPECTED_SKIP_REASONS` in CI.
-
-## Metadata and the quality score
-
-DuckDB, agents and documentation tools discover your functions through their metadata:
-titles, descriptions, argument docs, examples and keywords.
-[vgi-lint](https://github.com/Query-farm/vgi-lint-check) checks it, and CI runs it on
-every push. Its settings live in `vgi-lint.toml`, which `make lint-explain`,
-`vgi-lint lint`, and CI all read. This template scores 100/100 with no findings.
-
-```bash
-make lint-explain                              # findings, each with its fix
-make lint-explain LINT_ARGS="--format agent"   # the same, grouped for coding agents
-make lint-ai                                   # optional: an agent must solve vgi-agent-tests.yaml
-```
-
-Each report also states an **assurance level**: how much was actually verified.
-
-| Level | Reached when | Here |
+| Option | Default | Meaning |
 |---|---|---|
-| L1 structural | the static metadata is clean | workers that need real credentials (`execute: false` in CI) |
-| L2 behavioural | the examples also run and return what they claim | **the CI gate** |
-| L3 semantic | an agent solves the worker's own test tasks, and the docs are reviewed | `make lint-ai`, before publishing |
+| `base_url` | `''` (each organisation's public API) | An `http(s)://` mirror or proxy serving `<base_url>/<schema>/<api path>`, or a local directory of recorded responses (see `test/fixtures`), for offline use |
+| `user_agent` | `vgi-un/0.1 (+https://query.farm)` | User-Agent sent upstream |
 
-- **How strict.** Your copy fails on warnings (`fail_on = "warning"` in `vgi-lint.toml`).
-  Raise it to `"info"` before you publish the worker for others.
-- **The linter isn't pinned.** It tracks the current quality bar, so a new rule can flag
-  metadata that passed yesterday. Fix it, or waive the finding.
-- **Waivers.** If a finding is genuinely wrong for your worker, waive it in
-  `vgi-lint.toml` with a `kind` and a `reason`.
-- **Existing workers.** If you're adding this gate to a worker that already has
-  findings, record them with `vgi-lint lint --baseline vgi-lint-baseline --update-baseline`
-  and set `baseline` in `vgi-lint.toml`. After that, only new findings fail.
+### Secrets
 
-Metadata lives in `src/starter_worker/meta.py` and each function's `class Meta`.
-
-## Logging and debugging
-
-stdout carries the Arrow protocol, so **never print to stdout**. Log to stderr instead.
-Use the standard `logging` module (the SDK routes it to stderr); `--debug` or `--log-level DEBUG` turns it up.
-
-- Under DuckDB (stdio/launch), worker stderr shows up in DuckDB's error messages and
-  terminal.
-- In Docker it goes to `docker logs`.
-- `make debug` runs one query against the worker with debug logging on.
-
-## Deploying
-
-The same binary serves stdio (DuckDB starts it locally) or HTTP (you host it):
-
-```bash
-docker build -t weather-worker .
-docker run -p 8000:8000 -e STARTER_API_TOKEN=... weather-worker   # health: GET /health
-```
+Only `population.data` needs a key. Generate a Data Portal token on
+https://population.un.org/dataportalapi/index.html ("GENERATE TOKEN"), then:
 
 ```sql
-ATTACH 'starter' (TYPE vgi, LOCATION 'https://workers.example.com/starter');
+CREATE SECRET (TYPE un_population, TOKEN '...');
+SELECT year, value FROM un.population.data('49')
+WHERE country_iso3 = 'IND' AND year BETWEEN 2020 AND 2030 AND sex = 'Both sexes';
 ```
 
-Put hosted workers behind TLS and authentication. See
-[authentication](https://query.farm/vgi/authentication) for bearer tokens and JWTs, and
-[distributing a worker](https://query.farm/vgi/distributing-a-worker) for packaging.
-Pass secrets with `-e` or your platform's secret manager.
+Without it the function fails with a message naming the secret type. The WPP indicator and
+location lists are keyless. (UN Comtrade is not included in this release.)
 
-## Releasing
+## Functions and tables
 
-Push a tag like `v0.1.0`. The release workflow builds the wheel and sdist, attaches them to the GitHub release, and (if you set the repository variable `PYPI_PUBLISH=true` and configure PyPI Trusted Publishing) publishes to PyPI, so users can run `uvx vgi-starter-worker`. Without PyPI, users install straight from the repo with `uvx --from git+https://github.com/Query-farm/vgi-starter-python@v0.1.0 vgi-starter-worker`. Every artifact is signed with cosign and
-carries SLSA build provenance. `ci/check-version.sh` makes sure the tag matches the
-version in `pyproject.toml`.
+| Object | What it returns |
+|---|---|
+| `main.m49_countries` | The bundled M49 standard: M49, ISO alpha-2/alpha-3, region / sub-region / intermediate region, LDC / LLDC / SIDS |
+| `main.iso3_from_m49(code)`, `main.m49_from_iso3(code)` | Code converters (scalars, no network) |
+| `sdg.goals`, `sdg.targets`, `sdg.indicators`, `sdg.series`, `sdg.geoareas` | The SDG framework and area list |
+| `sdg.data(series)` | Observations of one or more series, with sex/age/location/reporting-type columns plus `dimensions`/`attributes` maps |
+| `uis.indicators`, `uis.geo_units`, `uis.versions` | UIS indicator definitions (with record counts), countries/regions, data versions |
+| `uis.data(indicator := , geo_unit := , version := )` | Observations; at least one of indicator / geo unit (argument or `WHERE`) |
+| `heritage.sites(country := )` | World Heritage properties: category, criteria list, inscription year, danger flag, area, ISO-3 States Parties, lat/lon, URL |
+| `population.indicators`, `population.locations` | WPP Data Portal indicators and locations (keyless) |
+| `population.data(indicator, location := , variants := )` | WPP estimates and projections (needs the secret) |
+| `refugees.populations`, `refugees.asylum_applications`, `refugees.asylum_decisions`, `refugees.solutions` | UNHCR figures in long format: year, origin, asylum country, (procedure dimensions), `measure`, `value` |
+| `refugees.countries` | UNHCR <-> ISO country codes |
+| `health.indicators`, `health.countries`, `health.dimensions`, `health.dimension_values(dimension)` | GHO indicator, country/WHO-region and dimension code lists |
+| `health.data(indicator)` | GHO observations by area, period, sex and other dimensions |
 
-## Using with coding agents
+### Pushdown
 
-[AGENTS.md](AGENTS.md) is written for AI coding agents (Claude Code reads it via
-`CLAUDE.md`; Codex, Cursor and others read it directly). It covers the commands, the
-recipe for adding a function, the metadata checklist and the sharp edges. A good first
-prompt:
+`WHERE` filters (and the named arguments) are turned into upstream request parameters; every
+pushed predicate is also re-applied locally, so results are exact.
 
-> Read AGENTS.md. Replace `fetch_items` with `forecast(lat DOUBLE, lon DOUBLE)` that calls
-> the Open-Meteo API. Include full metadata, a mock-server test and a `STARTER_LIVE` test.
-> You're done when `make check` passes.
+| Function | Pushed into the API |
+|---|---|
+| `sdg.data` | series code (argument); `country_iso3` / `m49` / `area_code` `=` or `IN` -> `areaCode`; bounded `year` ranges (< 100 years) -> repeated `timePeriod` (the API's `timePeriodStart/End` did not filter correctly) |
+| `uis.data` | `indicator_code`, `geo_unit`, `country_iso3` `=`/`IN`; `year` bounds -> `start`/`end`; data `version` |
+| `heritage.sites` | `country` argument -> `iso_codes`; `category`, `in_danger`, `region`, `year_inscribed` bounds -> ODSQL `where` |
+| `population.data` | indicator, `location` / `country_iso3` / `location_id`, `year` bounds -> path `start/end` |
+| `refugees.*` | `origin_iso3`, `asylum_iso3` -> `coo`/`coa` (with `cf_type=ISO`); `year` bounds -> `yearFrom`/`yearTo` |
+| `health.data` | `country_iso3` / `spatial_dim`, `year` bounds -> OData `$filter` |
 
-## Keeping up with the template
+Pagination cursors (page numbers, OData `$skip`, UIS request plans) live in the table
+function's serialized state, so scans resume correctly over the HTTP transport.
 
-`make template-diff` shows what changed upstream (CI, docs, examples) since your copy was
-made. Your copy records its template version in `.vgi-starter.json`.
+### The UIS 100,000-record limit
 
-## Learn more
+The UIS API refuses any request over 100,000 records. `uis.data` batches indicators by their
+published record counts, and when the API still refuses a request it splits it (indicator list,
+then year range, then geo units) and retries the pieces. If a single indicator/geo unit/year
+is still too large, the query fails with an error; it never returns truncated data.
 
-- [What is VGI?](https://query.farm/vgi) · [Getting started](https://query.farm/vgi/getting-started) · [Building a worker](https://query.farm/vgi/building-a-worker)
-- [Python SDK docs](https://query.farm/vgi/docs/python/): [scalar tutorial](https://query.farm/vgi/docs/python/tutorial/scalar/), [table tutorial](https://query.farm/vgi/docs/python/tutorial/table/)
-- [Distributing a worker](https://query.farm/vgi/distributing-a-worker) · [Choosing a language](https://query.farm/vgi/languages) · [llms.txt](https://query.farm/vgi/llms.txt)
-- SDK source: [vgi-python](https://github.com/Query-farm/vgi-python) · RPC layer: [https://vgi-rpc-python.query.farm](https://vgi-rpc-python.query.farm)
+## Data sources and terms
+
+Upstream data belongs to the publishing organisations and comes with their own terms, separate
+from this worker's code licence. Details, checks and checksums: [DATA-SOURCES.md](DATA-SOURCES.md).
+
+- **SDG Global Database, M49** — UN Statistics Division, UNdata terms of use: free to copy and
+  redistribute with citation. The M49 table is bundled.
+- **UIS** and **World Heritage List** — CC BY-SA 4.0. Fetched at query time, never bundled;
+  anything you publish from them is an adaptation under the same licence. The World Heritage
+  data is read from UNESCO's open-data portal (dataset `whc001`) because whc.unesco.org's own
+  exports block non-browser clients.
+- **World Population Prospects** — UN DESA Population Division, CC BY 3.0 IGO.
+- **UNHCR** — CC BY 4.0; cite "UNHCR Refugee Population Statistics Database".
+- **WHO GHO** — WHO terms and conditions for datasets (attribution; public-health use; no
+  resale). Fetched at query time, never bundled.
+
+This worker is not affiliated with or endorsed by the United Nations or its agencies.
+
+## Development
+
+```bash
+make check                 # ruff, mypy, pydoclint, pytest, SQL tests over stdio/launch/http, vgi-lint
+make test-unit
+make test-sql TRANSPORT=stdio
+```
+
+Tests and the metadata lint run offline: the worker reads `test/fixtures` through its ordinary
+`base_url` option. Fixtures from redistributable sources (SDG, UNHCR, WPP lists) are real
+responses recorded with `test/fixtures/record.py`; UIS, World Heritage, WHO and the token-gated
+WPP data are hand-written by `test/fixtures/make_synthetic.py` — made-up values shaped like the
+real APIs. A live check (opt-in, hits the real APIs): `make live-check`.
 
 ## Support
 
-Open an issue on this repository. For VGI itself, see [query.farm](https://query.farm).
+Open an issue on [GitHub](https://github.com/Query-farm/vgi-un/issues).
 
-## Authorship & license
+## Authorship & License
 
-The starter template is written by [Query.Farm](https://query.farm) and released under
-the [BSD Zero Clause License](LICENSE) (0BSD). Use it for anything, with no attribution
-required. Replace this section with your own license once the code is yours.
+Copyright 2026 Query Farm LLC - https://query.farm
+
+Released under the [BSD Zero Clause License](LICENSE) (0BSD). Data terms are separate; see
+above.

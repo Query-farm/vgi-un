@@ -1,0 +1,21 @@
+{
+ "@odata.context": "https://ghoapi.azureedge.net/api/$metadata",
+ "value": [
+  {
+   "Code": "AGEGROUP",
+   "Title": "Age Group"
+  },
+  {
+   "Code": "COUNTRY",
+   "Title": "Country"
+  },
+  {
+   "Code": "REGION",
+   "Title": "WHO region"
+  },
+  {
+   "Code": "SEX",
+   "Title": "Sex"
+  }
+ ]
+}

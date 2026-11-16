@@ -1,0 +1,30 @@
+{
+ "@odata.context": "https://ghoapi.azureedge.net/api/$metadata",
+ "value": [
+  {
+   "IndicatorCode": "WHOSIS_000001",
+   "IndicatorName": "Life expectancy at birth (years)",
+   "Language": "EN"
+  },
+  {
+   "IndicatorCode": "WHOSIS_000015",
+   "IndicatorName": "Life expectancy at age 60 (years)",
+   "Language": "EN"
+  },
+  {
+   "IndicatorCode": "WHOSIS_000002",
+   "IndicatorName": "Healthy life expectancy (HALE) at birth (years)",
+   "Language": "EN"
+  },
+  {
+   "IndicatorCode": "MDG_0000000001",
+   "IndicatorName": "Infant mortality rate (per 1000 live births)",
+   "Language": "EN"
+  },
+  {
+   "IndicatorCode": "NCD_BMI_30A",
+   "IndicatorName": "Prevalence of obesity among adults (%)",
+   "Language": "EN"
+  }
+ ]
+}

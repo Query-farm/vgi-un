@@ -1,0 +1,35 @@
+[
+ {
+  "id": "BRA",
+  "name": "Brazil",
+  "type": "NATIONAL"
+ },
+ {
+  "id": "IND",
+  "name": "India",
+  "type": "NATIONAL"
+ },
+ {
+  "id": "USA",
+  "name": "United States of America",
+  "type": "NATIONAL"
+ },
+ {
+  "id": "SDG: Sub-Saharan Africa",
+  "name": "Sub-Saharan Africa",
+  "type": "REGIONAL",
+  "regionGroup": "SDG"
+ },
+ {
+  "id": "SDG: World",
+  "name": "World",
+  "type": "REGIONAL",
+  "regionGroup": "SDG"
+ },
+ {
+  "id": "WB: High income",
+  "name": "High income",
+  "type": "REGIONAL",
+  "regionGroup": "WB"
+ }
+]

@@ -46,6 +46,8 @@ WHERE d.year = 2019 AND d.sex = 'SEX_BTSX' GROUP BY ALL ORDER BY ALL;
 
 Requires [uv](https://docs.astral.sh/uv/) and DuckDB 2.0 (or [Haybarn](https://query.farm/products/haybarn) 2.0).
 
+vgi-un 0.2.0 speaks VGI protocol 3.4, so it needs Haybarn 2.0.1 or newer (Haybarn 2.0.0 loads a 3.3 `vgi` extension that cannot attach it).
+
 ```sql
 -- DuckDB 2.0
 SET allow_extension_repositories = 'allowed';
@@ -53,7 +55,7 @@ CREATE EXTENSION REPOSITORY IF NOT EXISTS query_farm WITH PREFIX 'https://duckdb
 INSTALL vgi FROM query_farm;
 LOAD vgi FROM query_farm;
 
-ATTACH 'un' (TYPE vgi, LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-un@v0.1.1 vgi-un-worker');
+ATTACH 'un' (TYPE vgi, LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-un@v0.2.0 vgi-un-worker');
 ```
 
 From a checkout: `make build`, then
